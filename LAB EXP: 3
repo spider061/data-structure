@@ -1,0 +1,131 @@
+#include<stdio.h>
+#include<stdlib.h>
+#define MAX 100
+int stack[MAX], top1 =-1, top2= MAX;
+int isStack1Empty(){
+    return (top1 == -1) ? 1 : 0;
+}
+int isStack2Empty(){
+    return (top2 == MAX) ? 1 : 0;
+}
+int isStack1Full(){
+    return(top1 == top2-1) ? 1 : 0;
+}
+int isStack2Full(){
+    return(top2 == top1+1) ? 1 : 0;
+}
+void push_stack1(int data){
+    if(isStack1Full()){
+        printf("Stack1 Overflow!!!\n");
+    }
+    else{
+        stack[++top1] = data;
+        printf("Element Added to Stack1 !!!\n");
+    }
+}
+void push_stack2(int data){
+    if(isStack2Full()){
+        printf("Stack1 Overflow!!!\n");
+    }
+    else{
+        stack[--top2] = data;
+        printf("Element Added to Stack2 !!!\n");
+    }
+}
+void pop_Stack1(){
+    if(isStack1Empty()){
+        printf("Stack1 Underflow!!!\n");
+    }
+    else{
+        top1--;
+        printf("Element Removed from Stack1 !!!\n");
+    }
+}
+void pop_Stack2(){
+    if(isStack2Empty()){
+        printf("Stack2 Underflow!!!\n");
+    }
+    else{
+        top2++;
+        printf("Element Removed from Stack2 !!!\n");
+    }
+}
+void peek_Stack1(){
+    if(isStack1Empty()){
+        printf("Stack1 is Empty!!!\n");
+    }
+    else{
+        int val=stack[top1];
+        printf("Top most element of Stack1 is %d",val);
+    }
+}
+void peek_Stack2(){
+    if(isStack2Empty()){
+        printf("Stack2 is Empty!!!\n");
+    }
+    else{
+        int val1 = stack[top2];
+        printf("Top most element of Stack2 is %d",val1);
+    }
+}
+void show_Stack1(){
+    if(isStack1Empty()){
+        printf("Stack1 is Empty!!!\n");
+    }
+    else{
+        int i;
+        for(int i=top1; i>=0;i--){
+            printf("%d\n",stack[i]);
+        }
+    }
+}
+void show_Stack2(){
+    if(isStack2Empty()){
+        printf("Stack2 is Empty!!!\n");
+    }
+    else{
+        int i;
+        for(int i=top2; i<=0;i++){
+            printf("%d\n",stack[i]);
+        }
+    }
+}
+int main(){
+    while(1){
+        printf("1. Push\n");
+        printf("2. Pop\n");
+        printf("3. Peek\n");
+        printf("4. Show\n");
+        printf("5. Exit\n");
+        int choice,a;
+        printf("Enter Choice : ");
+        scanf("%d", &choice);
+        switch(choice){
+            case 1:
+            printf("Enter a :");
+            scanf("%d",&a);
+                push_stack1(a);
+                push_stack2(a);
+                break;
+            case 2:
+                pop_Stack1();
+                pop_Stack2();
+                break;
+            case 3:
+                peek_Stack1();
+                peek_Stack2();
+                break;
+            case 4:
+                show_Stack1();
+                show_Stack2();
+                break;
+            case 5:
+                exit(0);
+            default:
+                printf("Invalid Choice !!!!!\n");
+        }
+        printf("\n");
+        system("pause");
+    }
+    return 0;
+}
