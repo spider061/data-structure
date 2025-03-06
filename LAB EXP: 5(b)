@@ -1,0 +1,77 @@
+
+#include <stdio.h>
+#include<string.h>
+#include<stdlib.h>
+#include<ctype.h>
+int precedence(char op){
+    switch(op){
+    case '+':
+    case '-':
+    return 1;
+    case '*':
+    case '/':
+    return 2;
+    case '^':
+    return 3;
+    default:
+    return -1;
+    }
+}
+void reverse(char* str) {
+    int start = 0;
+    int end = strlen(str) - 1;
+    while (start < end) {
+        char temp = str[start];
+        str[start] = str[end];
+        str[end] = temp;
+        start++;
+        end--;
+    }
+}
+char* convertInfixToPrefix(char* exp){
+    int size = strlen(exp), top=-1, index=0;
+    char* str = (char*)malloc(size+1);
+    char stack[size];
+    for( int i=size-1;i>=0;i--){
+        char ch = exp[i];
+        if(isalnum(ch)){
+            str[index++] = ch;
+            
+        }
+        else if(ch=='+' || ch=='-' || ch=='/' || ch=='^'){
+            if(top==-1)
+            stack[++top] = ch;
+            else{
+                while(top!=-1 && precedence(ch)<=precedence(stack[top])){
+                    str[index++]=stack[top-1];
+                }
+                stack[++top] = ch;
+            }
+        }
+        else if(ch==')'){
+            stack[++top] = ch;
+        }
+        else if(ch=='('){
+            while(stack[top] != ')'){
+                str[index++] = stack[top--];
+            }
+            top--;
+        }
+    }
+    while(top!=-1){
+        str[index++] = stack[top--];
+    }
+    str[index]='\0';
+    reverse(str);
+    return str;
+}
+
+int main() {
+    char exp[100];
+    printf("Enter infix: ");
+    scanf("%s", exp);
+
+    printf("Infix to Prefix: %s -> %s\n", exp, convertInfixToPrefix(exp));
+
+    return 0;
+}
